@@ -1,0 +1,349 @@
+
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block body %}
+
+<style>
+
+    /* Full page contact section */
+    .contact-page {
+        min-height: calc(100vh - 56px);
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+            url("https://images.pexels.com/photos/26807017/pexels-photo-26807017.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 60px 20px;
+    }
+
+    .contact-container {
+        width: 100%;
+        max-width: 1100px;
+    }
+
+    .contact-heading {
+        text-align: center;
+        color: white;
+        margin-bottom: 35px;
+    }
+
+    .contact-heading h1 {
+        font-size: 45px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .contact-heading p {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    /* Contact box */
+    .contact-box {
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .contact-info {
+        padding: 15px;
+    }
+
+    .contact-info h2 {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .contact-info p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .info-item {
+        margin-top: 20px;
+    }
+
+    .info-item h5 {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .info-item p {
+        margin: 0;
+    }
+
+    /* Form */
+    .contact-form {
+        padding: 15px;
+    }
+
+    .contact-form label {
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .contact-form .form-control {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 18px;
+    }
+
+    .contact-form .form-control:focus {
+        border-color: #ff69b4;
+        box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.15);
+    }
+
+    .send-btn {
+        background: #ff69b4;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .send-btn:hover {
+        background: #e7549d;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Success message */
+    .success-message {
+        background: #fff0f7;
+        color: #d63384;
+        border: 1px solid #ffc2df;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+
+        .contact-page {
+            padding: 40px 15px;
+        }
+
+        .contact-heading h1 {
+            font-size: 32px;
+        }
+
+        .contact-heading p {
+            font-size: 16px;
+        }
+
+        .contact-box {
+            padding: 25px;
+        }
+    }
+
+</style>
+
+<div class="contact-page">
+
+    <div class="contact-container">
+
+        <!-- Heading -->
+        <div class="contact-heading">
+
+            <h1>Contact Us 🍦</h1>
+
+            <p>
+                We'd love to hear from you. Send us a message!
+            </p>
+
+        </div>
+
+
+        <!-- Contact Box -->
+        <div class="contact-box">
+
+            <div class="row align-items-center">
+
+                <!-- Contact Information -->
+                <div class="col-lg-5">
+
+                    <div class="contact-info">
+
+                        <h2>Let's Connect 💕</h2>
+
+                        <p>
+                            Have a question about our ice creams, flavours,
+                            family packs or anything else?
+                            Feel free to get in touch with us.
+                        </p>
+
+
+                        <div class="info-item">
+
+                            <h5>📍 Address</h5>
+
+                            <p>
+                                Mandi, Himachal Pradesh, India
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <h5>📞 Phone</h5>
+
+                            <p>
+                                +91 98765 43210
+                            </p>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <h5>✉️ Email</h5>
+
+                            <p>
+                                icecreamparlour@example.com
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Contact Form -->
+                <div class="col-lg-7">
+
+                    <div class="contact-form">
+
+                        <h3 class="mb-4 fw-bold">
+                            Send Us a Message 💌
+                        </h3>
+
+
+                        <!-- Django Contact Form -->
+                        <form id="contactForm" method="POST">
+
+                            {% csrf_token %}
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <label for="name">
+                                        Your Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        class="form-control"
+                                        placeholder="Enter your name"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label for="email">
+                                        Email Address
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Enter your email"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Phone Number -->
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="form-control"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+
+
+                            <!-- Description -->
+                            <label for="description">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="description"
+                                name="desc"
+                                rows="5"
+                                class="form-control"
+                                placeholder="Tell us how we can help you..."
+                                required
+                            ></textarea>
+
+
+                            <button
+                                type="submit"
+                                class="send-btn"
+                            >
+                                Send Message 🍨
+                            </button>
+
+                        </form>
+
+
+                        <!-- Cute Success Message -->
+                        {% if success %}
+                        <div class="success-message">
+
+                            Yay! Your message has been sent! 🍦💗
+                            <br>
+                            Thanks for making our day a little sweeter! ✨
+
+                        </div>
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}
+```
