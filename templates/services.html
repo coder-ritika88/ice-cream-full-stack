@@ -1,0 +1,942 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services{% endblock title %}
+
+{% block body %}
+
+<style>
+
+    /* =========================
+       MAIN PAGE
+    ========================== */
+
+    .services-page {
+        background: linear-gradient(135deg, #FFF9F0, #F8F3EA);
+        min-height: 90vh;
+        padding: 70px 20px 90px;
+    }
+
+    .services-heading {
+        text-align: center;
+        max-width: 750px;
+        margin: 0 auto 55px;
+    }
+
+    .services-label {
+        display: inline-block;
+        background: #DDEFE7;
+        color: #5A3E36;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .services-heading h1 {
+        color: #5A3E36;
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .services-heading h1 span {
+        color: #E98BAE;
+    }
+
+    .services-heading p {
+        color: #75645D;
+        font-size: 17px;
+        line-height: 1.8;
+    }
+
+
+    /* =========================
+       PRODUCT CARDS
+    ========================== */
+
+    .service-card {
+        background: #FFFFFF;
+        border-radius: 28px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 10px 30px rgba(90, 62, 54, 0.10);
+        border: 1px solid #EFE3D8;
+        transition: all 0.35s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 18px 40px rgba(90, 62, 54, 0.16);
+    }
+
+    .service-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+    }
+
+    .service-content {
+        padding: 30px 25px;
+        text-align: center;
+    }
+
+    .service-icon {
+        width: 65px;
+        height: 65px;
+        background: #DDEFE7;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        margin: -60px auto 20px;
+        position: relative;
+        border: 5px solid white;
+    }
+
+    .service-content h3 {
+        color: #5A3E36;
+        font-weight: 700;
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        color: #E98BAE;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .service-content p {
+        color: #75645D;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       QUANTITY
+    ========================== */
+
+    .quantity-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .quantity-box label {
+        color: #5A3E36;
+        font-weight: 600;
+    }
+
+    .quantity-box select {
+        border: 1px solid #C9DED5;
+        border-radius: 10px;
+        padding: 8px 15px;
+        color: #5A3E36;
+        outline: none;
+        cursor: pointer;
+        background: #F7FCF9;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .cart-btn,
+    .buy-btn {
+        border: none;
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 8px;
+    }
+
+    .cart-btn {
+        background: #DDEFE7;
+        color: #5A3E36;
+        border: 1px solid #C9DED5;
+    }
+
+    .cart-btn:hover {
+        background: #5A3E36;
+        color: white;
+    }
+
+    .buy-btn {
+        background: #E98BAE;
+        color: white;
+    }
+
+    .buy-btn:hover {
+        background: #D87599;
+        transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       CART
+    ========================== */
+
+    .cart-section {
+        margin-top: 70px;
+        background: #F7FCF9;
+        border-radius: 28px;
+        padding: 35px;
+        box-shadow: 0 10px 30px rgba(90, 62, 54, 0.08);
+        border: 1px solid #DDEFE7;
+    }
+
+    .cart-section h2 {
+        text-align: center;
+        color: #5A3E36;
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #E5EDE9;
+    }
+
+    .cart-item-name {
+        font-weight: 600;
+        color: #5A3E36;
+    }
+
+    .cart-item-price {
+        color: #E98BAE;
+        font-weight: 600;
+    }
+
+    .remove-btn {
+        border: none;
+        background: #FCE8EF;
+        color: #B85C7D;
+        padding: 7px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .remove-btn:hover {
+        background: #E98BAE;
+        color: white;
+    }
+
+    .empty-cart {
+        text-align: center;
+        color: #8A7770;
+        padding: 20px;
+    }
+
+    .cart-total {
+        text-align: right;
+        margin-top: 25px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #5A3E36;
+    }
+
+    .checkout-btn {
+        display: block;
+        margin: 20px 0 0 auto;
+        background: #5A3E36;
+        color: white;
+        border: none;
+        padding: 13px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .checkout-btn:hover {
+        background: #3F2B26;
+        transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       BOTTOM SECTION
+    ========================== */
+
+    .bottom-section {
+        margin-top: 70px;
+        background: linear-gradient(135deg, #5A3E36, #76554A);
+        border-radius: 30px;
+        padding: 55px 25px;
+        text-align: center;
+        color: white;
+    }
+
+    .bottom-section h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .bottom-section p {
+        font-size: 17px;
+        margin-bottom: 0;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 768px) {
+
+        .services-heading h1 {
+            font-size: 36px;
+        }
+
+        .services-page {
+            padding: 50px 15px 70px;
+        }
+
+        .bottom-section h2 {
+            font-size: 30px;
+        }
+
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .cart-total {
+            text-align: left;
+        }
+
+        .checkout-btn {
+            margin-left: 0;
+        }
+    }
+
+</style>
+
+
+<div class="services-page">
+
+    <div class="container">
+
+
+        <!-- =========================
+             PAGE HEADING
+        ========================== -->
+
+        <div class="services-heading">
+
+            <div class="services-label">
+                OUR SWEET COLLECTION 🍦
+            </div>
+
+            <h1>
+                Something Sweet
+                <span>for Everyone</span>
+            </h1>
+
+            <p>
+                Choose your favourite treat, select your quantity,
+                add it to your cart or buy it instantly.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCTS
+        ========================== -->
+
+        <div class="row g-4">
+
+
+            <!-- SOFTY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="service-card">
+
+                    <img
+                        src="https://images.pexels.com/photos/5061193/pexels-photo-5061193.jpeg"
+                        alt="Softy Ice Cream"
+                        class="service-image"
+                    >
+
+                    <div class="service-content">
+
+                        <div class="service-icon">
+                            🍦
+                        </div>
+
+                        <h3>
+                            Softy
+                        </h3>
+
+                        <div class="price">
+                            ₹50
+                        </div>
+
+                        <p>
+                            Smooth, creamy and delicious softy ice cream
+                            for the perfect sweet treat.
+                        </p>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-box">
+
+                            <label>
+                                Quantity:
+                            </label>
+
+                            <select id="quantity-softy">
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- ADD TO CART -->
+
+                        <button
+                            class="cart-btn"
+                            onclick="addToCart('Softy', 50, 'quantity-softy')">
+
+                            🛒 Add to Cart
+
+                        </button>
+
+
+                        <!-- BUY NOW -->
+
+                        <button
+                            class="buy-btn"
+                            onclick="buyNow('Softy', 50, 'quantity-softy')">
+
+                            💗 Buy Now
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAMILY PACK -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="service-card">
+
+                    <img
+                        src="https://images.pexels.com/photos/1098592/pexels-photo-1098592.jpeg"
+                        alt="Family Pack"
+                        class="service-image"
+                    >
+
+                    <div class="service-content">
+
+                        <div class="service-icon">
+                            👨‍👩‍👧‍👦
+                        </div>
+
+                        <h3>
+                            Family Pack
+                        </h3>
+
+                        <div class="price">
+                            ₹250
+                        </div>
+
+                        <p>
+                            A delicious family pack made for sharing
+                            sweet moments with your loved ones.
+                        </p>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-box">
+
+                            <label>
+                                Quantity:
+                            </label>
+
+                            <select id="quantity-family">
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- ADD TO CART -->
+
+                        <button
+                            class="cart-btn"
+                            onclick="addToCart('Family Pack', 250, 'quantity-family')">
+
+                            🛒 Add to Cart
+
+                        </button>
+
+
+                        <!-- BUY NOW -->
+
+                        <button
+                            class="buy-btn"
+                            onclick="buyNow('Family Pack', 250, 'quantity-family')">
+
+                            💗 Buy Now
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ICE CREAM -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="service-card">
+
+                    <img
+                        src="https://images.pexels.com/photos/1625235/pexels-photo-1625235.jpeg"
+                        alt="Ice Cream"
+                        class="service-image"
+                    >
+
+                    <div class="service-content">
+
+                        <div class="service-icon">
+                            🍨
+                        </div>
+
+                        <h3>
+                            Ice Cream
+                        </h3>
+
+                        <div class="price">
+                            ₹80
+                        </div>
+
+                        <p>
+                            Enjoy delicious flavours, creamy textures
+                            and the perfect scoop for every craving.
+                        </p>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-box">
+
+                            <label>
+                                Quantity:
+                            </label>
+
+                            <select id="quantity-icecream">
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- ADD TO CART -->
+
+                        <button
+                            class="cart-btn"
+                            onclick="addToCart('Ice Cream', 80, 'quantity-icecream')">
+
+                            🛒 Add to Cart
+
+                        </button>
+
+
+                        <!-- BUY NOW -->
+
+                        <button
+                            class="buy-btn"
+                            onclick="buyNow('Ice Cream', 80, 'quantity-icecream')">
+
+                            💗 Buy Now
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CART
+        ========================== -->
+
+        <div class="cart-section">
+
+            <h2>
+
+                🛒 Your Sweet Cart
+
+                <span id="cart-count">
+                    (0)
+                </span>
+
+            </h2>
+
+
+            <div id="cart-items">
+
+                <div class="empty-cart">
+
+                    Your cart is empty 🍦
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="cart-total"
+                id="cart-total">
+
+                Total: ₹0
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="checkout()">
+
+                💗 Proceed to Checkout
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             BOTTOM MESSAGE
+        ========================== -->
+
+        <div class="bottom-section">
+
+            <h2>
+                Every scoop brings a little happiness 💗
+            </h2>
+
+            <p>
+                Choose your favourite, add it to your cart
+                and enjoy something sweet!
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script>
+
+    let cart = [];
+
+
+    /* =========================
+       ADD TO CART
+    ========================== */
+
+    function addToCart(name, price, quantityId) {
+
+        let quantity = parseInt(
+            document.getElementById(quantityId).value
+        );
+
+
+        let existingItem = cart.find(
+            item => item.name === name
+        );
+
+
+        if (existingItem) {
+
+            existingItem.quantity += quantity;
+
+        } else {
+
+            cart.push({
+
+                name: name,
+
+                price: price,
+
+                quantity: quantity
+
+            });
+
+        }
+
+
+        displayCart();
+
+
+        alert(
+            "Yay! " +
+            quantity +
+            " " +
+            name +
+            " added to your cart 🍦💗"
+        );
+
+    }
+
+
+
+    /* =========================
+       REMOVE FROM CART
+    ========================== */
+
+    function removeFromCart(index) {
+
+        cart.splice(index, 1);
+
+        displayCart();
+
+    }
+
+
+
+    /* =========================
+       DISPLAY CART
+    ========================== */
+
+    function displayCart() {
+
+        let cartItems =
+            document.getElementById("cart-items");
+
+        let cartCount =
+            document.getElementById("cart-count");
+
+        let cartTotal =
+            document.getElementById("cart-total");
+
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML =
+                '<div class="empty-cart">Your cart is empty 🍦</div>';
+
+            cartCount.innerText = "(0)";
+
+            cartTotal.innerText = "Total: ₹0";
+
+            return;
+
+        }
+
+
+        let html = "";
+
+        let total = 0;
+
+        let count = 0;
+
+
+        cart.forEach(function(item, index) {
+
+            let itemTotal =
+                item.price * item.quantity;
+
+
+            total += itemTotal;
+
+            count += item.quantity;
+
+
+            html += `
+
+                <div class="cart-item">
+
+                    <div>
+
+                        <div class="cart-item-name">
+                            ${item.name}
+                        </div>
+
+                        <div>
+                            Quantity: ${item.quantity}
+                        </div>
+
+                    </div>
+
+
+                    <div class="cart-item-price">
+                        ₹${itemTotal}
+                    </div>
+
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeFromCart(${index})">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+
+        cartItems.innerHTML = html;
+
+
+        cartCount.innerText =
+            "(" + count + ")";
+
+
+        cartTotal.innerText =
+            "Total: ₹" + total;
+
+    }
+
+
+
+    /* =========================
+       BUY NOW
+    ========================== */
+
+    function buyNow(name, price, quantityId) {
+
+        let quantity = parseInt(
+            document.getElementById(quantityId).value
+        );
+
+
+        let total =
+            price * quantity;
+
+
+        alert(
+
+            "💗 Order Summary\n\n" +
+
+            "Product: " +
+            name +
+            "\n" +
+
+            "Quantity: " +
+            quantity +
+            "\n" +
+
+            "Total: ₹" +
+            total +
+
+            "\n\nThank you for choosing our ice cream! 🍦"
+
+        );
+
+    }
+
+
+
+    /* =========================
+       CHECKOUT
+    ========================== */
+
+    function checkout() {
+
+        if (cart.length === 0) {
+
+            alert(
+
+                "Your cart is empty! 🍦\n" +
+
+                "Please add something sweet first."
+
+            );
+
+            return;
+
+        }
+
+
+        let total = 0;
+
+
+        cart.forEach(function(item) {
+
+            total +=
+                item.price *
+                item.quantity;
+
+        });
+
+
+        alert(
+
+            "💗 Ready to Checkout!\n\n" +
+
+            "Your total is ₹" +
+            total +
+
+            "\n\nThank you for ordering from our Ice Cream Parlour! 🍦"
+
+        );
+
+    }
+
+</script>
+
+
+{% endblock body %}
